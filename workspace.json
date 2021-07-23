@@ -1,6 +1,84 @@
 {
   "version": 2,
   "projects": {
+    "dubbie": {
+      "root": "apps/dubbie",
+      "sourceRoot": "apps/dubbie",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "root": "apps/dubbie",
+            "outputPath": "dist/apps/dubbie"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "dubbie:build",
+            "dev": true,
+            "port": 3000
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "dubbie:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "dubbie:build:production"
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/dubbie"],
+          "options": {
+            "jestConfig": "apps/dubbie/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/dubbie/**/*.{ts,tsx,js,jsx}"]
+          }
+        }
+      }
+    },
+    "dubbie-e2e": {
+      "root": "apps/dubbie-e2e",
+      "sourceRoot": "apps/dubbie-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/dubbie-e2e/cypress.json",
+            "tsConfig": "apps/dubbie-e2e/tsconfig.e2e.json",
+            "devServerTarget": "dubbie:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "dubbie:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/dubbie-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
     "sketch": {
       "root": "apps/sketch",
       "sourceRoot": "apps/sketch",

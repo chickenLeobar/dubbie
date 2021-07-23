@@ -27,6 +27,13 @@
     ]
   },
   "projects": {
+    "dubbie": {
+      "tags": ["frontend"]
+    },
+    "dubbie-e2e": {
+      "tags": [],
+      "implicitDependencies": ["dubbie"]
+    },
     "sketch": {
       "tags": []
     },
