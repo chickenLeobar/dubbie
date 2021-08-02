@@ -34,12 +34,18 @@
       "tags": [],
       "implicitDependencies": ["dubbie"]
     },
+    "shared": {
+      "tags": []
+    },
     "sketch": {
       "tags": []
     },
     "sketch-e2e": {
       "tags": [],
       "implicitDependencies": ["sketch"]
+    },
+    "utils": {
+      "tags": []
     }
   }
 }
