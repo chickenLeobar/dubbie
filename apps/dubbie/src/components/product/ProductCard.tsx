@@ -59,61 +59,16 @@ const ButtonMenu = styled.a`
     transform: scale(1.08);
   }
 `;
-import { Product } from "@dubbie/@types/eccomerce.types";
+import { TProduct } from "@dubbie/@types/venduro.types";
 import { ImageRamdom } from "@dubbie/components/common/Image";
 type Props = {
-  product?: Product;
+  product?: TProduct;
 };
 
 function ProductCard({ product }: Props) {
   const [refObject, isHover] = useHover<HTMLDivElement>();
-  const mock = (
-    <Box
-      textAlign="center"
-      m={4}
-      width={300}
-      position="relative"
-      sx={{
-        transition: "0.2s ease",
-        _hover: {
-          cursor: "pointer",
-          shadow: "xl",
-        },
-      }}
-      ref={refObject}
-    >
-      {/* menu */}
-      <MenuContainer className={!isHover && "hide"}>
-        <ButtonMenu>
-          <AiFillHeart />
-        </ButtonMenu>
-        <ButtonMenu>
-          <AiOutlineSearch />
-        </ButtonMenu>
-        <ButtonMenu>
-          <AiOutlineLink />
-        </ButtonMenu>
-      </MenuContainer>
-
-      <ImageContainer>
-        <Image src={"/products/mando.png"} width={size} height={size} />
-      </ImageContainer>
-      <Stack spacing={3} p={2} flexDirection="column" alignItems="center">
-        <Text fontWeight="semibold">Mando Controlador</Text>
-        <Text fontWeight="extrabold">25 s/.</Text>
-        <Button
-          leftIcon={<AiOutlineShoppingCart />}
-          my={2}
-          variant="white"
-          border="1px"
-        >
-          Carrito
-        </Button>
-      </Stack>
-    </Box>
-  );
   if (!product) {
-    return mock;
+    <div>TOODO</div>;
   }
   return (
     <Box
@@ -143,12 +98,15 @@ function ProductCard({ product }: Props) {
         </ButtonMenu>
       </MenuContainer>
       <ImageContainer>
-        <ImageRamdom assets={product.assets} width={size} height={size} />
+        <ImageRamdom asset={product.productAsset} width={size} height={size} />
       </ImageContainer>
       <Stack spacing={3} p={2} flexDirection="column" alignItems="center">
-        <Text fontWeight="semibold">{product.name}</Text>
+        <Text fontWeight="semibold">{product.productName}</Text>
         <Text fontWeight="extrabold">
-          {product.price.formatted_with_symbol}
+          {
+            (product.price as { __typename?: "SinglePrice"; value: number })
+              .value
+          }
         </Text>
         <Button
           leftIcon={<AiOutlineShoppingCart />}

@@ -4,11 +4,16 @@ import { Text, Container, Flex } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {} from "@dubbie/@types/eccomerce.types";
 import {
-  selectReccommended,
+  getProductsByCollectionSlug,
   useEcommerceStore,
 } from "@dubbie/stores/global/eccomerce";
+import shallow from "zustand/shallow";
 export default function index() {
-  const products = useEcommerceStore(selectReccommended);
+  const products = useEcommerceStore(
+    getProductsByCollectionSlug("recomendados"),
+    shallow
+  );
+
   const productRender = products.map((pr, idx) => {
     return (
       <SwiperSlide key={idx}>

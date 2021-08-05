@@ -11,7 +11,7 @@ const nextConfig = {
     svgr: true,
   },
   images: {
-    domains: ["cdn.chec.io"],
+    domains: ["cdn.chec.io", "localhost"],
   },
 };
 

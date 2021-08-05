@@ -1,0 +1,22 @@
+overwrite: true
+watch: true
+schema: "http://localhost:3000/shop-api"
+documents: "apps/**/*.graphql.{ts,tsx}"
+generates:
+  ./apps/dubbie/src/common/generated/index.ts:
+    plugins:
+      - add:
+          content: "// tslint:disable "
+      - add:
+          content: "// this file is generate pls not edit manually :)"
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-query"
+    config:
+      namingConvention:
+        enumValues: "keep"
+      maybeValue: "T"
+      strict: true
+      fetcher:
+        func: "@dubbie/lib/request.fetchet#useFetchData"
+        isReactHook: true

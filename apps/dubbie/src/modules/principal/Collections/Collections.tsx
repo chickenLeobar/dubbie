@@ -4,12 +4,12 @@ import { Container, Flex, Text } from "@chakra-ui/react";
 
 import {
   useEcommerceStore,
-  selectCategories,
+  selectCollections,
 } from "@dubbie/stores/global/eccomerce";
 function Collections() {
-  const categories = useEcommerceStore(selectCategories);
+  const categories = useEcommerceStore(selectCollections);
   let categorieRender = categories.map((categorie, idx) => {
-    return <CategoryRoot key={idx} category={categorie} />;
+    return <CategoryRoot key={idx} collection={categorie} />;
   });
   return (
     <Container my={3}>
