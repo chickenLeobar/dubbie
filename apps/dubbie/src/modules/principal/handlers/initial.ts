@@ -1,6 +1,6 @@
 import { GetStaticProps, GetStaticPropsContext } from "next";
 // import eccomercejs from "@dubbie/lib/eccomece";
-// import { Product, Category } from "@dubbie/@types/eccomerce.types";
+
 import grapqhlRequest from "@dubbie/lib/graphql-request";
 import {
   GetCollectionsDocument,
@@ -27,6 +27,7 @@ const handler: GetStaticProps<PropsHandler> = async (
       GetCollectionsQueryVariables
     >(GetCollectionsDocument);
 
+    // TODO: changue search product query for GetTopSellers query
     const {
       data: {
         search: { items: products },

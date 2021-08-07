@@ -1,3 +1,4 @@
+import { ASSET_FRAGMENT } from "./../fragments.graphql";
 import { gql } from "graphql-request";
 export const SEARCH_PRODUCTS = gql`
   query SearchProducts($input: SearchInput!) {
@@ -47,4 +48,32 @@ export const SEARCH_PRODUCTS = gql`
       }
     }
   }
+`;
+
+export const GET_COLLECTION = gql`
+  query GetCollection($id: ID, $slug: String) {
+    collection(id: $id, slug: $slug) {
+      id
+      name
+      slug
+      description
+      featuredAsset {
+        ...Asset
+      }
+      breadcrumbs {
+        id
+        slug
+        name
+      }
+      children {
+        id
+        slug
+        featuredAsset {
+          ...Asset
+        }
+        name
+      }
+    }
+  }
+  ${ASSET_FRAGMENT}
 `;

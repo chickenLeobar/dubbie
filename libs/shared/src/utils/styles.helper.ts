@@ -1,5 +1,5 @@
-import { LeSafeAny } from '@dubbie/utils';
-import { get } from 'lodash';
+import { LeSafeAny } from "@dubbie/utilities";
+import { get } from "lodash";
 /**
  *
  * @param path

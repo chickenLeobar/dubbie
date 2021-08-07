@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@Common": ["libs/shared/src/index.ts"],
-      "@dubbie/utils": ["libs/utils/src/index.ts"],
+      "@dubbie/utilities": ["libs/utils/src/index.ts"],
       "@dubbie/*": ["apps/dubbie/src/*"]
     }
   },

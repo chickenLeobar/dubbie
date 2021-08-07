@@ -12,6 +12,7 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-react-query"
+      - "typescript-compatibility"
     config:
       namingConvention:
         enumValues: "keep"

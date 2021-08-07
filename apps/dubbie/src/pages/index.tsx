@@ -10,6 +10,7 @@ import handler, {
 } from "@dubbie/modules/principal/handlers/initial";
 import { RootFooter } from "../components/common/footer";
 import OCassionalProduct from "../modules/principal/addons/OcassionProduct";
+
 import {
   actionsSelector,
   useEcommerceStore,
@@ -19,6 +20,7 @@ export const getStaticProps = handler;
 export function Index({ collections, products }: PropsHandler) {
   const whiteColor = useToken("colors", ["white"]);
   const { setCollections, setProducts } = useEcommerceStore(actionsSelector);
+
   useEffect(() => {
     setCollections(collections);
     setProducts(products);
@@ -39,13 +41,11 @@ export function Index({ collections, products }: PropsHandler) {
           <Hero />
         </Container>
       </Flex>
-
       <Collections />
       <Tendences />
       <OCassionalProduct />
       <Qualities />
       <RootFooter />
-      {/* <pre>{JSON.stringify(items, null, 4)}</pre> */}
     </>
   );
 }

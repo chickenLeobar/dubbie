@@ -6,3 +6,15 @@ import {
 export type TProduct = SearchProductsQuery["search"]["items"][0];
 
 export type TCollection = GetCollectionsQuery["collections"]["items"][0];
+
+export type FacetValues = SearchProductsQuery["search"]["facetValues"];
+
+export interface FacetWithValues {
+  id: string;
+  name: string;
+  values: Array<{
+    id: string;
+    name: string;
+    count: number;
+  }>;
+}

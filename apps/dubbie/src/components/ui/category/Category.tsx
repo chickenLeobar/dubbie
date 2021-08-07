@@ -28,7 +28,7 @@ function CategoryComponent({ collection }: Props) {
         },
       }}
     >
-      <NextLink passHref href={`categorie/${collection.slug}`}>
+      <NextLink passHref href={`/categories/${collection.slug}`}>
         <Link fontWeight="semibold" fontSize="md">
           {collection.name}
         </Link>

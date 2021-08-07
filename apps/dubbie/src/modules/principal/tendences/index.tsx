@@ -2,7 +2,7 @@ import React from "react";
 import ProductCard from "../../../components/product/ProductCard";
 import { Text, Container, Flex } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {} from "@dubbie/@types/eccomerce.types";
+
 import {
   getProductsByCollectionSlug,
   useEcommerceStore,

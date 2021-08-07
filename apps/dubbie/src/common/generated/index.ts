@@ -3045,6 +3045,14 @@ export type SearchProductsQueryVariables = Exact<{
 
 export type SearchProductsQuery = { __typename?: 'Query', search: { __typename?: 'SearchResponse', totalItems: number, items: Array<{ __typename?: 'SearchResult', collectionIds: Array<string>, productId: string, slug: string, productName: string, description: string, facetIds: Array<string>, price: { __typename?: 'PriceRange', min: number, max: number } | { __typename?: 'SinglePrice', value: number }, priceWithTax: { __typename?: 'PriceRange', min: number, max: number } | { __typename?: 'SinglePrice' }, productAsset?: Maybe<{ __typename?: 'SearchResultAsset', id: string, preview: string, focalPoint?: Maybe<{ __typename?: 'Coordinate', x: number, y: number }> }> }>, facetValues: Array<{ __typename?: 'FacetValueResult', count: number, facetValue: { __typename?: 'FacetValue', id: string, name: string, facet: { __typename?: 'Facet', id: string, name: string } } }> } };
 
+export type GetCollectionQueryVariables = Exact<{
+  id?: Maybe<Scalars['ID']>;
+  slug?: Maybe<Scalars['String']>;
+}>;
+
+
+export type GetCollectionQuery = { __typename?: 'Query', collection?: Maybe<{ __typename?: 'Collection', id: string, name: string, slug: string, description: string, featuredAsset?: Maybe<{ __typename?: 'Asset', id: string, width: number, height: number, name: string, preview: string, focalPoint?: Maybe<{ __typename?: 'Coordinate', x: number, y: number }> }>, breadcrumbs: Array<{ __typename?: 'CollectionBreadcrumb', id: string, slug: string, name: string }>, children?: Maybe<Array<{ __typename?: 'Collection', id: string, slug: string, name: string, featuredAsset?: Maybe<{ __typename?: 'Asset', id: string, width: number, height: number, name: string, preview: string, focalPoint?: Maybe<{ __typename?: 'Coordinate', x: number, y: number }> }> }>> }> };
+
 export const AssetFragmentDoc = `
     fragment Asset on Asset {
   id
@@ -3314,3 +3322,130 @@ export const useSearchProductsQuery = <
       useFetchData<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument).bind(null, variables),
       options
     );
+export const GetCollectionDocument = `
+    query GetCollection($id: ID, $slug: String) {
+  collection(id: $id, slug: $slug) {
+    id
+    name
+    slug
+    description
+    featuredAsset {
+      ...Asset
+    }
+    breadcrumbs {
+      id
+      slug
+      name
+    }
+    children {
+      id
+      slug
+      featuredAsset {
+        ...Asset
+      }
+      name
+    }
+  }
+}
+    ${AssetFragmentDoc}`;
+export const useGetCollectionQuery = <
+      TData = GetCollectionQuery,
+      TError = unknown
+    >(
+      variables?: GetCollectionQueryVariables, 
+      options?: UseQueryOptions<GetCollectionQuery, TError, TData>
+    ) => 
+    useQuery<GetCollectionQuery, TError, TData>(
+      ['GetCollection', variables],
+      useFetchData<GetCollectionQuery, GetCollectionQueryVariables>(GetCollectionDocument).bind(null, variables),
+      options
+    );
+type DiscriminateUnion<T, U> = T extends U ? T : never;
+
+export namespace GetCustomerAddresses {
+  export type Variables = GetCustomerAddressesQueryVariables;
+  export type Query = GetCustomerAddressesQuery;
+  export type ActiveCustomer = (NonNullable<GetCustomerAddressesQuery['activeCustomer']>);
+  export type Addresses = NonNullable<(NonNullable<(NonNullable<GetCustomerAddressesQuery['activeCustomer']>)['addresses']>)[number]>;
+}
+
+export namespace GetAvailableCountries {
+  export type Variables = GetAvailableCountriesQueryVariables;
+  export type Query = GetAvailableCountriesQuery;
+  export type AvailableCountries = NonNullable<(NonNullable<GetAvailableCountriesQuery['availableCountries']>)[number]>;
+}
+
+export namespace GetActiveCustomer {
+  export type Variables = GetActiveCustomerQueryVariables;
+  export type Query = GetActiveCustomerQuery;
+  export type ActiveCustomer = (NonNullable<GetActiveCustomerQuery['activeCustomer']>);
+}
+
+export namespace GetCollections {
+  export type Variables = GetCollectionsQueryVariables;
+  export type Query = GetCollectionsQuery;
+  export type Collections = (NonNullable<GetCollectionsQuery['collections']>);
+  export type Items = NonNullable<(NonNullable<(NonNullable<GetCollectionsQuery['collections']>)['items']>)[number]>;
+  export type Parent = (NonNullable<NonNullable<(NonNullable<(NonNullable<GetCollectionsQuery['collections']>)['items']>)[number]>['parent']>);
+  export type FeaturedAsset = (NonNullable<NonNullable<(NonNullable<(NonNullable<GetCollectionsQuery['collections']>)['items']>)[number]>['featuredAsset']>);
+}
+
+export namespace Asset {
+  export type Fragment = AssetFragment;
+  export type FocalPoint = (NonNullable<AssetFragment['focalPoint']>);
+}
+
+export namespace Cart {
+  export type Fragment = CartFragment;
+  export type Lines = NonNullable<(NonNullable<CartFragment['lines']>)[number]>;
+  export type FeaturedAsset = (NonNullable<NonNullable<(NonNullable<CartFragment['lines']>)[number]>['featuredAsset']>);
+  export type ProductVariant = (NonNullable<NonNullable<(NonNullable<CartFragment['lines']>)[number]>['productVariant']>);
+  export type Discounts = NonNullable<(NonNullable<NonNullable<(NonNullable<CartFragment['lines']>)[number]>['discounts']>)[number]>;
+  export type ShippingLines = NonNullable<(NonNullable<CartFragment['shippingLines']>)[number]>;
+  export type ShippingMethod = (NonNullable<NonNullable<(NonNullable<CartFragment['shippingLines']>)[number]>['shippingMethod']>);
+  export type _Discounts = NonNullable<(NonNullable<CartFragment['discounts']>)[number]>;
+}
+
+export namespace Country {
+  export type Fragment = CountryFragment;
+}
+
+export namespace OrderAddress {
+  export type Fragment = OrderAddressFragment;
+}
+
+export namespace Address {
+  export type Fragment = AddressFragment;
+  export type Country = (NonNullable<AddressFragment['country']>);
+}
+
+export namespace ErrorResult {
+  export type Fragment = ErrorResultFragment;
+}
+
+export namespace SearchProducts {
+  export type Variables = SearchProductsQueryVariables;
+  export type Query = SearchProductsQuery;
+  export type Search = (NonNullable<SearchProductsQuery['search']>);
+  export type Items = NonNullable<(NonNullable<(NonNullable<SearchProductsQuery['search']>)['items']>)[number]>;
+  export type Price = (NonNullable<NonNullable<(NonNullable<(NonNullable<SearchProductsQuery['search']>)['items']>)[number]>['price']>);
+  export type SinglePriceInlineFragment = (DiscriminateUnion<(NonNullable<NonNullable<(NonNullable<(NonNullable<SearchProductsQuery['search']>)['items']>)[number]>['price']>), { __typename?: 'SinglePrice' }>);
+  export type PriceRangeInlineFragment = (DiscriminateUnion<(NonNullable<NonNullable<(NonNullable<(NonNullable<SearchProductsQuery['search']>)['items']>)[number]>['price']>), { __typename?: 'PriceRange' }>);
+  export type PriceWithTax = (NonNullable<NonNullable<(NonNullable<(NonNullable<SearchProductsQuery['search']>)['items']>)[number]>['priceWithTax']>);
+  export type _PriceRangeInlineFragment = (DiscriminateUnion<(NonNullable<NonNullable<(NonNullable<(NonNullable<SearchProductsQuery['search']>)['items']>)[number]>['priceWithTax']>), { __typename?: 'PriceRange' }>);
+  export type ProductAsset = (NonNullable<NonNullable<(NonNullable<(NonNullable<SearchProductsQuery['search']>)['items']>)[number]>['productAsset']>);
+  export type FocalPoint = (NonNullable<(NonNullable<NonNullable<(NonNullable<(NonNullable<SearchProductsQuery['search']>)['items']>)[number]>['productAsset']>)['focalPoint']>);
+  export type FacetValues = NonNullable<(NonNullable<(NonNullable<SearchProductsQuery['search']>)['facetValues']>)[number]>;
+  export type FacetValue = (NonNullable<NonNullable<(NonNullable<(NonNullable<SearchProductsQuery['search']>)['facetValues']>)[number]>['facetValue']>);
+  export type Facet = (NonNullable<(NonNullable<NonNullable<(NonNullable<(NonNullable<SearchProductsQuery['search']>)['facetValues']>)[number]>['facetValue']>)['facet']>);
+}
+
+export namespace GetCollection {
+  export type Variables = GetCollectionQueryVariables;
+  export type Query = GetCollectionQuery;
+  export type Collection = (NonNullable<GetCollectionQuery['collection']>);
+  export type FeaturedAsset = (NonNullable<(NonNullable<GetCollectionQuery['collection']>)['featuredAsset']>);
+  export type Breadcrumbs = NonNullable<(NonNullable<(NonNullable<GetCollectionQuery['collection']>)['breadcrumbs']>)[number]>;
+  export type Children = NonNullable<(NonNullable<(NonNullable<GetCollectionQuery['collection']>)['children']>)[number]>;
+  export type _FeaturedAsset = (NonNullable<NonNullable<(NonNullable<(NonNullable<GetCollectionQuery['collection']>)['children']>)[number]>['featuredAsset']>);
+}

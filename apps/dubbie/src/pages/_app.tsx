@@ -9,28 +9,31 @@ import "swiper/components/thumbs/thumbs.min.css";
 import "swiper/components/navigation/navigation.min.css";
 import { RequestCLientProvider } from "@dubbie/core/contexts/requetContex";
 import { Global, ThemeProvider } from "@emotion/react";
-
+import { Hydrate } from "react-query/hydration";
+import { ReactQueryDevtools } from "react-query/devtools";
 function CustomApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
-
   return (
     <>
-      <RequestCLientProvider>
-        <QueryClientProvider client={queryClient}>
-          <ChakraProvider theme={theme}>
-            <ThemeProvider theme={theme}>
-              <Component {...pageProps} />
-            </ThemeProvider>
-            <Global
-              styles={css`
-                body {
-                  overflow-x: hidden;
-                }
-              `}
-            />
-          </ChakraProvider>
-        </QueryClientProvider>
-      </RequestCLientProvider>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <RequestCLientProvider>
+            <ChakraProvider theme={theme}>
+              <ThemeProvider theme={theme}>
+                <Component {...pageProps} />
+              </ThemeProvider>
+              <Global
+                styles={css`
+                  body {
+                    overflow-x: hidden;
+                  }
+                `}
+              />
+            </ChakraProvider>
+          </RequestCLientProvider>
+        </Hydrate>
+        <ReactQueryDevtools initialIsOpen />
+      </QueryClientProvider>
     </>
   );
 }
