@@ -13,7 +13,10 @@ import {
 
 import CatalogoMenu from "./components/CatalogoMenu";
 import styled from "@emotion/styled";
-import useUiStore, { toggleSearchBar } from "@dubbie/stores/useUiStore";
+import useUiStore, {
+  toggleSearchBar,
+  selectActions,
+} from "@dubbie/stores/useUiStore";
 import { Portal } from "@chakra-ui/react";
 import { useRefBody } from "@dubbie/utils/hooks/useRefBody";
 import SearchMenu from "./components/SearchMenu";
@@ -41,7 +44,8 @@ const ButtonHeader = styled.button`
 
 const LeftMenu = () => {
   const toggleSearch = useUiStore(toggleSearchBar);
-
+  // const toggleSearch =
+  const { toogleCartDrawer } = useUiStore(selectActions);
   return (
     <HStack>
       {/* <SearchMenu /> */}
@@ -52,7 +56,8 @@ const LeftMenu = () => {
         <AiOutlineHeart />
       </ButtonHead>
       <ButtonHead>
-        <AiOutlineShoppingCart />
+        {/* shopping cart */}
+        <AiOutlineShoppingCart onClick={() => toogleCartDrawer()} />
       </ButtonHead>
     </HStack>
   );
