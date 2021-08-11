@@ -67,3 +67,7 @@ export const actionsSelector = (state: Complete) => ({
   setFacets: state.setFacets,
   setPartialState: state.setPartialState,
 });
+
+/*=============================================
+=            CART SELECTORS            =
+=============================================*/

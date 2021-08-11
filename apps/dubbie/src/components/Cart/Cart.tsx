@@ -1,85 +1,52 @@
-import React from "react";
 import {
+  Button,
   Drawer,
   DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  Button,
-  Box,
-  Text,
   HStack,
+  Text,
   VStack,
-  Flex,
 } from "@chakra-ui/react";
-
+import { useEcommerceStore } from "@dubbie/stores/global/eccomerce";
 import useUiStore, {
-  selectCartDrawerState,
   selectActions,
+  selectCartDrawerState,
 } from "@dubbie/stores/useUiStore";
-import NextImage from "next/image";
-const CartItem = () => {
-  return (
-    <HStack maxHeight="100px">
-      <Box p={2}>
-        <NextImage
-          src="/products/mando.png"
-          objectFit="contain"
-          width="80px"
-          height="80px"
-        />
-      </Box>
-      <VStack spacing={1} alignItems="flex-start">
-        <Text>Master Dinamyc</Text>
-        <Text color="blackAlpha.400">Electronics</Text>
-        <Text color="red" fontWeight="bold" fontSize="lg">
-          $399.95
-        </Text>
-      </VStack>
-      <Flex width="150px" justifyContent="flex-end" alignItems="center">
-        <HStack>
-          <Button width="25px" height="25px" color="white" bg={"#C4C4C4"}>
-            +
-          </Button>
-          <Text fontWeight="semibold">8</Text>
-          <Button width="25px" height="25px" color="white" bg={"#C4C4C4"}>
-            +
-          </Button>
-        </HStack>
-      </Flex>
-    </HStack>
-  );
-};
+import React from "react";
+import { CartItem } from "./components/CartItem";
 
 function Cart() {
   const open = useUiStore(selectCartDrawerState);
   const { toogleCartDrawer } = useUiStore(selectActions);
+  const { cart } = useEcommerceStore();
+
   return (
     <Drawer
       isOpen={open}
-      size="sm"
+      size="md"
       placement="right"
       isFullHeight
+      blockScrollOnMount={true}
       onClose={toogleCartDrawer}
     >
+      <DrawerOverlay></DrawerOverlay>
       <DrawerContent>
         <DrawerCloseButton />
-        <DrawerBody mt={10} bg="white">
+        <DrawerHeader>
           <Text textAlign="center" fontWeight="bold" fontSize="x-large">
             Carrito
           </Text>
+        </DrawerHeader>
+        <DrawerBody mt={5} bg="white">
           <VStack spacing={4} mt={2}>
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
+            {cart?.lines &&
+              cart.lines.map((pr, idx) => {
+                return <CartItem line={pr} key={idx} />;
+              })}
           </VStack>
         </DrawerBody>
         <DrawerFooter
@@ -95,7 +62,7 @@ function Cart() {
               Total:
             </Text>
             <Text fontSize="lg" fontWeight="semibold">
-              150 s/.
+              {cart?.total || 0}
             </Text>
           </HStack>
           <Button variant="black">Comprar</Button>

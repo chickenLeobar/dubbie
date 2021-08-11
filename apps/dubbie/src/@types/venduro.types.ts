@@ -1,6 +1,7 @@
 import {
   SearchProductsQuery,
   GetCollectionsQuery,
+  AddToCart,
 } from "./../common/generated/index";
 
 export type TProduct = SearchProductsQuery["search"]["items"][0];
@@ -18,3 +19,7 @@ export interface FacetWithValues {
     count: number;
   }>;
 }
+
+export type Cart = AddToCart.Order;
+
+export type LineCart = AddToCart.Order["lines"][0];

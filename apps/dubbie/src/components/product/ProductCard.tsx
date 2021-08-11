@@ -61,15 +61,21 @@ const ButtonMenu = styled.a`
 `;
 import { TProduct } from "@dubbie/@types/venduro.types";
 import { ImageRamdom } from "@dubbie/components/common/Image";
+import { useAddToCartMutation } from "@dubbie/common/generated";
+import { useAddToCartEffect } from "@dubbie/stores/global/eccomerce";
 type Props = {
   product?: TProduct;
 };
 
 function ProductCard({ product }: Props) {
   const [refObject, isHover] = useHover<HTMLDivElement>();
+
+  const { addItemToCart } = useAddToCartEffect();
+
   if (!product) {
     <div>TOODO</div>;
   }
+
   return (
     <Box
       textAlign="center"
@@ -113,6 +119,7 @@ function ProductCard({ product }: Props) {
           my={2}
           variant="white"
           border="1px"
+          onClick={() => addItemToCart(product)}
         >
           Carrito
         </Button>

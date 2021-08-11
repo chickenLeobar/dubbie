@@ -4,8 +4,8 @@ import {
   TCollection,
   TProduct,
   FacetWithValues,
+  Cart,
 } from "@dubbie/@types/venduro.types";
-import { GetCollections } from "@dubbie/common/generated";
 
 interface State {
   products: TProduct[];
@@ -13,14 +13,16 @@ interface State {
   facets: FacetWithValues[];
   selectedFacetsIds: number[];
   currentCollection: TCollection | null;
+  cart: Cart | null;
 }
+export type Complete = State & Operations;
+
 interface Operations {
   setCollections: (collections: TCollection[]) => void;
   setProducts: (products: TProduct[]) => void;
   setFacets: (facets: FacetWithValues[]) => void;
-  setPartialState: (state: Partial<State>) => void;
+  setPartialState: (state: Partial<Complete>) => void;
 }
-export type Complete = State & Operations;
 
 export const useEcommerceStore = create<Complete>((set) => ({
   collections: [],
@@ -28,6 +30,7 @@ export const useEcommerceStore = create<Complete>((set) => ({
   facets: [],
   currentCollection: null,
   selectedFacetsIds: [],
+  cart: null,
   setCollections: (collections) => {
     set({ collections });
   },

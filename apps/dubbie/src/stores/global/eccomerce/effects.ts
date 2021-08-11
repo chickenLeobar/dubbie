@@ -1,17 +1,22 @@
+import { useToast } from "@chakra-ui/react";
+import { LineCart, TProduct } from "@dubbie/@types/venduro.types";
 import {
-  useSearchProductsQuery,
+  AddToCart,
+  useAddToCartMutation,
+  useAdjustItemQuantityMutation,
+  useGetActiveOrderQuery,
   useGetCollectionQuery,
-  LogicalOperator,
+  useSearchProductsQuery,
 } from "@dubbie/common/generated";
-import {
-  useEcommerceStore,
-  selectectFacetIds,
-  actionsSelector,
-} from "./eccomerce";
-import { useEffect, useState } from "react";
 import { groupFacetValues } from "@dubbie/utils";
+import { useEffect, useRef, useState } from "react";
 /// this initlize facets and some products
 import { useQueryClient } from "react-query";
+import {
+  actionsSelector,
+  selectectFacetIds,
+  useEcommerceStore,
+} from "./eccomerce";
 export const useRefetchProducts = (slugCollection: string) => {
   const facetdIds = useEcommerceStore(selectectFacetIds);
 
@@ -95,4 +100,72 @@ export const useRefetchProducts = (slugCollection: string) => {
   return {
     isLoading: isLoading || queryInitializeProducts.isLoading,
   };
+};
+
+export const useAddToCartEffect = () => {
+  const toast = useToast();
+  const productRef = useRef<TProduct>(null);
+
+  const addToCartMutation = useAddToCartMutation();
+
+  const activeOrder = useGetActiveOrderQuery();
+
+  const { setPartialState } = useEcommerceStore();
+
+  const addItemToCart = (product: TProduct) => {
+    productRef.current = product;
+    addToCartMutation.mutate({
+      variantId: product.productId,
+      qty: 1,
+    });
+  };
+
+  useEffect(() => {
+    if (addToCartMutation.data) {
+      const data = addToCartMutation.data.addItemToOrder;
+      setPartialState({
+        cart: data as AddToCart.Order,
+      });
+      toast({
+        description:
+          productRef.current.productName + " se ha agregado al carrito",
+        position: "bottom-right",
+      });
+    }
+    // activeOrder.refetch();
+  }, [addToCartMutation.data]);
+
+  // only listen  active order effects
+  useEffect(() => {
+    if (activeOrder.data) {
+      setPartialState({
+        cart: activeOrder.data.activeOrder as AddToCart.Order,
+      });
+    }
+  }, [activeOrder.data]);
+
+  return { addItemToCart };
+};
+
+export const useAddJustQuantityEffect = () => {
+  const justQuantiyMutation = useAdjustItemQuantityMutation();
+  const { setPartialState } = useEcommerceStore();
+  const addJustQuantity = (line: LineCart, qty: number) => {
+    justQuantiyMutation.mutate({
+      id: line.id,
+      qty: qty,
+    });
+  };
+  useEffect(() => {
+    if (justQuantiyMutation.data) {
+      const { adjustOrderLine: order } = justQuantiyMutation.data;
+      if ("code" in order) {
+        setPartialState({
+          cart: order,
+        });
+      }
+    }
+  }, [justQuantiyMutation.data]);
+
+  return { addJustQuantity };
 };

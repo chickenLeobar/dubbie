@@ -15,9 +15,9 @@ import {
   actionsSelector,
   useEcommerceStore,
 } from "@dubbie/stores/global/eccomerce";
-export const getStaticProps = handler;
+import { useAddToCartEffect } from "@dubbie/stores/global/eccomerce";
 
-import { Cart } from "@dubbie/components/Cart";
+export const getStaticProps = handler;
 
 export function Index({ collections, products }: PropsHandler) {
   const whiteColor = useToken("colors", ["white"]);
@@ -48,7 +48,6 @@ export function Index({ collections, products }: PropsHandler) {
       <OCassionalProduct />
       <Qualities />
       <RootFooter />
-      <Cart />
     </>
   );
 }
