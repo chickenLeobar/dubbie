@@ -11,7 +11,7 @@ import GlobalStyle from "@dubbie/globals/globalStyles";
 import "swiper/components/navigation/navigation.min.css";
 import "swiper/components/thumbs/thumbs.min.css";
 import "swiper/swiper.scss";
-
+import { AuthModal } from "../modules/auth";
 function CustomApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
 
@@ -25,10 +25,11 @@ function CustomApp({ Component, pageProps }: AppProps) {
             {/* chakra provider */}
             <ChakraProvider theme={theme}>
               {/* emotion */}
-
               <ThemeProvider theme={theme}>
                 <Component {...pageProps} />
                 <Cart />
+                {/* auth modal */}
+                <AuthModal />
                 <GlobalStyle />
               </ThemeProvider>
             </ChakraProvider>

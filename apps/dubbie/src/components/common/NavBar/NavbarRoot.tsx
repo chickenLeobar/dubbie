@@ -21,6 +21,7 @@ import { Portal } from "@chakra-ui/react";
 import { useRefBody } from "@dubbie/utils/hooks/useRefBody";
 import SearchMenu from "./components/SearchMenu";
 import NextLink from "next/link";
+import { useModalAuth } from "@dubbie/modules/auth";
 type ButtonHeadProps = PropsWithChildren<{}>;
 
 const ButtonHead = (props: ButtonHeadProps) => {
@@ -43,6 +44,7 @@ const ButtonHeader = styled.button`
 `;
 
 const LeftMenu = () => {
+  const { toggleModal } = useModalAuth.getState();
   const toggleSearch = useUiStore(toggleSearchBar);
   // const toggleSearch =
   const { toogleCartDrawer } = useUiStore(selectActions);
@@ -53,7 +55,7 @@ const LeftMenu = () => {
         <AiOutlineSearch onClick={() => toggleSearch()} />
       </ButtonHead>
       <ButtonHead>
-        <AiOutlineHeart />
+        <AiOutlineHeart onClick={() => toggleModal()} />
       </ButtonHead>
       <ButtonHead>
         {/* shopping cart */}

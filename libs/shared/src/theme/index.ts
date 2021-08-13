@@ -2,10 +2,10 @@ import { extendTheme } from "@chakra-ui/react";
 import { mode, StyleConfig } from "@chakra-ui/theme-tools";
 
 // StyleConfig
-const Button = {
+const Button: StyleConfig = {
   // 1. We can update the base styles
   baseStyle: {
-    fontWeight: "600", // Normally, it is "semibold"
+    fontWeight: "400", // Normally, it is "semibold"
     borderRadius: "2px",
     width: "110px",
     widht: "150px",
@@ -68,8 +68,8 @@ const Container: StyleConfig = {
 
 export default extendTheme({
   fonts: {
-    heading: "Russo One",
-    body: "Nunito Sans",
+    heading: "Nunito Sans",
+    body: "'Roboto', sans-serif",
   },
   colors: {
     secondary: "#FAF6F4",
