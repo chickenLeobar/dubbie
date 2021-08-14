@@ -5,16 +5,28 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
-import { Register, Login } from "./";
+import React, { useEffect } from "react";
+import { Register, Login, VerifyPage } from "./";
+import { useRouter } from "next/router";
 
-import { useModalAuth } from "./useModalAuth";
+import { useAuthStore } from "./useAuthStore";
+import { BeforeConfirm } from "./";
 function Auth() {
-  const { open } = useModalAuth();
+  const { modalIsOpen } = useAuthStore();
+  const { openModal, setToken } = useAuthStore.getState();
+  const router = useRouter();
+
+  useEffect(() => {
+    const { token } = router.query;
+    if (!!token && typeof token == "string") {
+      openModal("verify");
+      setToken(token);
+    }
+  }, [router]);
   const { onClose, isOpen } = useDisclosure({
-    isOpen: open,
+    isOpen: modalIsOpen,
     onClose: () => {
-      useModalAuth.getState().set((state) => ({ open: !state.open }));
+      useAuthStore.getState().closeModal();
     },
   });
 
@@ -25,6 +37,8 @@ function Auth() {
         <ModalCloseButton />
         <Register />
         <Login />
+        <VerifyPage />
+        <BeforeConfirm />
       </ModalContent>
     </Modal>
   );

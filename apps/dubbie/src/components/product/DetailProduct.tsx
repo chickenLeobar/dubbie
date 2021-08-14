@@ -15,7 +15,9 @@ import { Button, VStack } from "@chakra-ui/react";
 import { AiOutlineLeft, AiOutlineRight, AiOutlineHeart } from "react-icons/ai";
 import { FaCartPlus } from "react-icons/fa";
 import styled from "@emotion/styled";
+import { FormatPrice } from "@dubbie/components/product";
 
+import { TProduct } from "@dubbie/@types/venduro.types";
 const fakeImage = [
   "/products/mando.png",
   "/products/mando.png",
@@ -45,24 +47,23 @@ const ButtonQuantity = styled(Button)`
   width: 50px;
 `;
 
-function SiglePresentation() {
+type TProductProps = {
+  product: TProduct;
+};
+
+function SiglePresentation({ product }: TProductProps) {
   const [fonIconSize] = useToken("fontSizes", ["3xl"]);
+
   return (
     <Container size="lg">
       <Wrapper>
-        <ProductGalery images={fakeImage} />
+        <ProductGalery product={product} images={fakeImage} />
         <Box className="product_detail">
           <Stack className="box" spacing={5} mt={1}>
             <Text fontWeight="semibold" fontSize="3xl">
-              Audifonos Blanco y negro
+              {product.name}
             </Text>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit ut
-              aliquam, purus sit amet luctus venenatis, lectus magna fringilla
-              urna, porttitor Lorem ipsum dolor sit amet, consectetur adipiscing
-              elit ut aliquam, purus sit amet luctus venenatis, lectus magna
-              fringilla urna, porttitor
-            </Text>
+            <Text>{product.description}</Text>
             <PaymentIcons
               className="payment_icons"
               svgstyles={css`
@@ -72,7 +73,9 @@ function SiglePresentation() {
             <Stack spacing={5}>
               <HStack spacing={10}>
                 <Text fontWeight="bold">Precio:</Text>
-                <Text fontWeight="light">50 s/.</Text>
+                <Text fontWeight="light">
+                  <FormatPrice>{product}</FormatPrice>
+                </Text>
               </HStack>
               <HStack spacing={10}>
                 <Text fontWeight="bold">Cantidad:</Text>
@@ -86,16 +89,13 @@ function SiglePresentation() {
                   </ButtonQuantity>
                 </HStack>
               </HStack>
-
               <HStack>
                 <Button variant="black" p={1}>
                   comprar
                 </Button>
-
                 <Button variant="black" rightIcon={<FaCartPlus />}>
                   comprar
                 </Button>
-
                 <Button variant="black" width="50px">
                   <AiOutlineHeart />
                 </Button>

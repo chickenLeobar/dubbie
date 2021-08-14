@@ -15,12 +15,12 @@ import {
   actionsSelector,
   useEcommerceStore,
 } from "@dubbie/stores/global/eccomerce";
-import { useAddToCartEffect } from "@dubbie/stores/global/eccomerce";
 
 export const getStaticProps = handler;
 
 export function Index({ collections, products }: PropsHandler) {
   const whiteColor = useToken("colors", ["white"]);
+
   const { setCollections, setProducts } = useEcommerceStore(actionsSelector);
 
   useEffect(() => {

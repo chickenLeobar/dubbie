@@ -27,16 +27,15 @@ function CustomApp({ Component, pageProps }: AppProps) {
               {/* emotion */}
               <ThemeProvider theme={theme}>
                 <Component {...pageProps} />
+                {/* cart is share between pages */}
                 <Cart />
                 {/* auth modal */}
-                <AuthModal />
                 <GlobalStyle />
               </ThemeProvider>
+              <AuthModal />
             </ChakraProvider>
           </RequestCLientProvider>
         </Hydrate>
-        {/* cart is share between pages */}
-
         {/* <ReactQueryDevtools initialIsOpen /> */}
       </QueryClientProvider>
     </>

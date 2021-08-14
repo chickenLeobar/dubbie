@@ -2,9 +2,11 @@ import {
   SearchProductsQuery,
   GetCollectionsQuery,
   AddToCart,
+  GetProductDetail,
 } from "./../common/generated/index";
 
-export type TProduct = SearchProductsQuery["search"]["items"][0];
+export type TProduct = SearchProductsQuery["search"]["items"][0] &
+  Partial<GetProductDetail.Product>;
 
 export type TCollection = GetCollectionsQuery["collections"]["items"][0];
 

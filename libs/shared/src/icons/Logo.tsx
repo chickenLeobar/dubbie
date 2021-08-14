@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React, { SVGProps } from "react";
-import { LeSafeAny } from "@dubbie/utils";
+import { LeSafeAny } from "@dubbie/utilities";
 
 const BlackLogo = (props: LeSafeAny) => (
   <svg
@@ -94,6 +94,10 @@ export function Logo(props: Props) {
   switch (props.size) {
     case "small": {
       widthLogo = "130px";
+      break;
+    }
+    case "md": {
+      widthLogo = "200px";
       break;
     }
   }

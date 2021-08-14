@@ -11,13 +11,13 @@ export const useFetchData = <TData, TVariables>(
         "Authorization",
         `Bearer ${localStorage.getItem("token")}`
       );
-      console.log("token added");
     }
     // authorization: `Bearer ${authToken}`,
-    const { data, headers } = await client.rawRequest<TData, TVariables>(
-      query,
-      variables
-    );
+    const { data, headers, extensions } = await client.rawRequest<
+      TData,
+      TVariables
+    >(query, variables);
+
     // save token in local
     if (isBrowser) {
       // safe localStorage
