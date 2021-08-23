@@ -32,8 +32,6 @@ const BackSqure = styled(_BackSqure)`
   position: absolute;
 `;
 
-import { Product } from "@dubbie/@types/eccomerce.types";
-
 // type Props = {
 //   product: Product;
 // };

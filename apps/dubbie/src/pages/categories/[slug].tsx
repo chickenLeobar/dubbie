@@ -1,21 +1,30 @@
 import { Flex, Container } from "@chakra-ui/react";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import NavbarRooot from "@dubbie/components/common/NavBar/NavbarRoot";
 import { Hero } from "@dubbie/modules/collection/Hero";
 import {
-  selectProductsByCategorie,
+  selectProductsBySearch,
+  selectCollectionBySlug,
+  selectCurrentCollection,
   useEcommerceStore,
 } from "@dubbie/stores/global/eccomerce";
 import ProductsSection from "@dubbie/modules/collection/products";
 import { RootFooter } from "@dubbie/components/common/footer";
 import { useRouter } from "next/router";
+
+import { useRefetchProducts } from "@dubbie/stores/global/eccomerce";
+
 function collection() {
   const router = useRouter();
   const slug = router.query.slug as string;
-  const [products, categorie] = useEcommerceStore(
-    useCallback((state) => selectProductsByCategorie(state, slug), [])
-  );
-  console.log(categorie);
+
+  const { isLoading } = useRefetchProducts(slug);
+  // this initialize all
+  const collection = useEcommerceStore(selectCurrentCollection);
+
+  if (!collection) {
+    return <h1>loading</h1>;
+  }
 
   return (
     <>
@@ -24,8 +33,8 @@ function collection() {
           <NavbarRooot />
         </Container>
       </Flex>
-      <Hero categorie={categorie.name} />
-      <ProductsSection products={products} />
+      <Hero categorie={collection.name} />
+      <ProductsSection />
       <RootFooter />
     </>
   );

@@ -1,13 +1,13 @@
 import React from "react";
 import { HStack, Text, useToken, chakra, Link } from "@chakra-ui/react";
 import { AiOutlineRight } from "react-icons/ai";
-import { Category } from "@dubbie/@types/eccomerce.types";
+import { TCollection } from "@dubbie/@types/venduro.types";
 const LeftIcon = chakra(AiOutlineRight);
 import NextLink from "next/link";
 type Props = {
-  category: Category;
+  collection: TCollection;
 };
-function CategoryComponent({ category }: Props) {
+function CategoryComponent({ collection }: Props) {
   const black = useToken("colors", "black");
   return (
     <HStack
@@ -28,9 +28,9 @@ function CategoryComponent({ category }: Props) {
         },
       }}
     >
-      <NextLink passHref href={`categorie/${category.slug}`}>
+      <NextLink passHref href={`/categories/${collection.slug}`}>
         <Link fontWeight="semibold" fontSize="md">
-          {category.name}
+          {collection.name}
         </Link>
       </NextLink>
       <LeftIcon fontWeight="bold" mr={4} />

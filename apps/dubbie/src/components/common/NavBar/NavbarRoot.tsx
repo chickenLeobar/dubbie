@@ -13,11 +13,15 @@ import {
 
 import CatalogoMenu from "./components/CatalogoMenu";
 import styled from "@emotion/styled";
-import useUiStore, { toggleSearchBar } from "@dubbie/stores/useUiStore";
+import useUiStore, {
+  toggleSearchBar,
+  selectActions,
+} from "@dubbie/stores/useUiStore";
 import { Portal } from "@chakra-ui/react";
 import { useRefBody } from "@dubbie/utils/hooks/useRefBody";
 import SearchMenu from "./components/SearchMenu";
 import NextLink from "next/link";
+import { useAuthStore } from "@dubbie/modules/auth";
 type ButtonHeadProps = PropsWithChildren<{}>;
 
 const ButtonHead = (props: ButtonHeadProps) => {
@@ -40,8 +44,10 @@ const ButtonHeader = styled.button`
 `;
 
 const LeftMenu = () => {
+  const { openModal } = useAuthStore.getState();
   const toggleSearch = useUiStore(toggleSearchBar);
-
+  // const toggleSearch =
+  const { toogleCartDrawer } = useUiStore(selectActions);
   return (
     <HStack>
       {/* <SearchMenu /> */}
@@ -49,10 +55,11 @@ const LeftMenu = () => {
         <AiOutlineSearch onClick={() => toggleSearch()} />
       </ButtonHead>
       <ButtonHead>
-        <AiOutlineHeart />
+        <AiOutlineHeart onClick={() => openModal("loguin")} />
       </ButtonHead>
       <ButtonHead>
-        <AiOutlineShoppingCart />
+        {/* shopping cart */}
+        <AiOutlineShoppingCart onClick={() => toogleCartDrawer()} />
       </ButtonHead>
     </HStack>
   );

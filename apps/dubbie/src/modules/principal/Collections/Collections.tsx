@@ -4,13 +4,14 @@ import { Container, Flex, Text } from "@chakra-ui/react";
 
 import {
   useEcommerceStore,
-  selectCategories,
+  selectCollectionsTree,
 } from "@dubbie/stores/global/eccomerce";
 function Collections() {
-  const categories = useEcommerceStore(selectCategories);
-  let categorieRender = categories.map((categorie, idx) => {
-    return <CategoryRoot key={idx} category={categorie} />;
+  const { children } = useEcommerceStore(selectCollectionsTree);
+  let categorieRender = children.map((categorie, idx) => {
+    return <CategoryRoot key={idx} collection={categorie} />;
   });
+
   return (
     <Container my={3}>
       <Text textAlign="center" my={"14"} fontWeight="semibold" fontSize="large">

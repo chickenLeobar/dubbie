@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
-import React, { SVGProps } from 'react';
-import { LeSafeAny } from '@dubbie/utils';
+import styled from "@emotion/styled";
+import React, { SVGProps } from "react";
+import { LeSafeAny } from "@dubbie/utilities";
 
 const BlackLogo = (props: LeSafeAny) => (
   <svg
@@ -85,10 +85,30 @@ const WhiteLogo = (props: LeSafeAny) => {
     </svg>
   );
 };
-type Props = { mode: 'white' | 'black' } & SVGProps<any>;
+type Size = "small" | "md" | "lg";
+
+type Props = { mode: "white" | "black"; size?: Size } & SVGProps<any>;
 
 export function Logo(props: Props) {
-  return props?.mode && props.mode == 'white'
+  let widthLogo: number | string = -1;
+  switch (props.size) {
+    case "small": {
+      widthLogo = "130px";
+      break;
+    }
+    case "md": {
+      widthLogo = "200px";
+      break;
+    }
+  }
+  if (widthLogo != -1) {
+    props = {
+      ...props,
+      width: widthLogo,
+    };
+  }
+
+  return props?.mode && props.mode == "white"
     ? WhiteLogo(props)
     : BlackLogo(props);
 }
